@@ -16,21 +16,21 @@ namespace Inlamning_2_ra_kod
     {
         public string _name, _address, _phone, _email;
 
-        /* METHOD: class.ReadListFile (static) 
-         * PURPOSE: READ ALL FILES (.txt)
-         * PARAMETERS: THE FILE TO READ: fileName
-         * RETURN VALUE: SHOW THE FILE CONTENT
+        /* METHOD: PERSON
+         * PURPOSE: CREATE A PERSON
+         * PARAMETERS: PERSON NAME, PERSON ADDRESS, PERSON PHONE, PERSON EMAIL
+         * RETURN VALUE: RETURN A PERSON BUILDING WITH 4 PARAMETERS
          */
         public Person(string name, string address, string phone, string email)
         {
             _name = name; _address = address; _phone = phone; _email = email;
         }
 
-        /* METHOD: class.ReadListFile (static) 
-         * PURPOSE: READ ALL FILES (.txt)
-         * PARAMETERS: THE FILE TO READ: fileName
-         * RETURN VALUE: SHOW THE FILE CONTENT
-         */
+        /*METHOD: PERSON
+        * PURPOSE: CREATE A PERSON
+        * PARAMETERS: SETING BY USER
+        * RETURN VALUE: RETURN A PERSON BUILDING WITH 4 PARAMETERS INTRODUCED BY USER
+        */
         public Person()
         {
             Write("Introduce a contact NAME: ");
@@ -43,10 +43,10 @@ namespace Inlamning_2_ra_kod
             _email = ReadLine().ToUpper();
         }
 
-        /* METHOD: class.ReadListFile (static) 
-         * PURPOSE: READ ALL FILES (.txt)
-         * PARAMETERS: THE FILE TO READ: fileName
-         * RETURN VALUE: SHOW THE FILE CONTENT
+        /* METHOD: PERSON
+         * PURPOSE: CREATE A PERSON BY A FIELD AND VALUE INTRODUCED BY USER
+         * PARAMETERS: FIELD LINKED TO A VALUE
+         * RETURN VALUE: RETURN A PERSON 
          */
         public Person(string fields, string values)
         {
@@ -76,10 +76,10 @@ namespace Inlamning_2_ra_kod
             }
         }
 
-        /* METHOD: class.ReadListFile (static) 
-         * PURPOSE: READ ALL FILES (.txt)
-         * PARAMETERS: THE FILE TO READ: fileName
-         * RETURN VALUE: SHOW THE FILE CONTENT
+        /* METHOD: PRINT
+         * PURPOSE: SHOW A PERSON INFORMATION
+         * PARAMETERS: EMPTY
+         * RETURN VALUE: SHOW A PERSON
          */
         public void Print()
         {
@@ -88,7 +88,7 @@ namespace Inlamning_2_ra_kod
     }
 
      /* CLASS: Program
-      * PURPOSE: Create a new Contact in the Address Book
+      * PURPOSE: Create and manipulate a Contact in the Address Book
       */
     class Program
     {
@@ -140,8 +140,8 @@ namespace Inlamning_2_ra_kod
             } while (command != "quit");
         }
 
-        /* METHOD: class.ReadListFile (static) 
-         * PURPOSE: READ ALL FILES (.txt)
+        /* METHOD: ReadListToFile (static) 
+         * PURPOSE: LOAD AND READ ALL FILES (.txt)
          * PARAMETERS: THE FILE TO READ: fileName
          * RETURN VALUE: SHOW THE FILE CONTENT
          */
@@ -164,9 +164,9 @@ namespace Inlamning_2_ra_kod
             return people;
         }
 
-        /* METHOD: class.GetIndexToListPerson (static) 
+        /* METHOD:GetIndexToListPerson (static) 
           * PURPOSE: FIND THE CONTACT INDEX
-          * PARAMETERS: PEOPLE LIST AND VARIABEL changeContact THAT STORE THE NAME OF PERSON TO FIND
+          * PARAMETERS: 1-PEOPLE LIST AND VARIABEL 2-changeContact THAT STORE THE NAME OF PERSON TO FIND
           * RETURN VALUE: THE PERSON INDEX AND IF CONTACT DOESN´T EXIST, RETURN -1
           */
         public static int GetIndexToListPerson(List<Person> people, string changeContact)
@@ -180,10 +180,10 @@ namespace Inlamning_2_ra_kod
             return index;
         }
 
-        /* METHOD: class.ReadListFile (static) 
-         * PURPOSE: READ ALL FILES (.txt)
-         * PARAMETERS: THE FILE TO READ: fileName
-         * RETURN VALUE: SHOW THE FILE CONTENT
+        /* METHOD: ChangeContactInfoByIndex(static) 
+         * PURPOSE: FIND A CONTACT BY THEM INDEX
+         * PARAMETERS: LIST OF PERSON AND INDEX VARIABEL
+         * RETURN VALUE: THE CONTACT FINDED
          */
         public static void ChangeContactInfoByIndex(List<Person> people, int index)
         {
@@ -199,10 +199,10 @@ namespace Inlamning_2_ra_kod
             people[index]._email = newPerson._email == "" ? people[index]._email : newPerson._email;
         }
 
-        /* METHOD: class.ReadListFile (static) 
-         * PURPOSE: READ ALL FILES (.txt)
-         * PARAMETERS: THE FILE TO READ: fileName
-         * RETURN VALUE: SHOW THE FILE CONTENT
+        /* METHOD: ChangeContact (static) 
+         * PURPOSE: EDIT PERSON INFORMATION
+         * PARAMETERS: LIST OF CONTACT AND changeContact VARIABEL
+         * RETURN VALUE: PERSON WITH UPDATE INFO
          */
         public static void ChangeContact(List<Person> people, string changeContact)
         {
@@ -218,10 +218,10 @@ namespace Inlamning_2_ra_kod
             }
         }
 
-        /* METHOD: class.ReadListFile (static) 
-         * PURPOSE: READ ALL FILES (.txt)
-         * PARAMETERS: THE FILE TO READ: fileName
-         * RETURN VALUE: SHOW THE FILE CONTENT
+        /* METHOD: DeleteContact (static) 
+         * PURPOSE: DELETE A CONTACT FROM THE ADDRESS BOOK
+         * PARAMETERS: LIST OF CONTACT AND deleteContact VARIABEL
+         * RETURN VALUE: PERSON DELETED FROM THE LIST PERSON
          */
         public static void DeleteContact(List<Person> people, string deleteContact)
         {
@@ -232,10 +232,10 @@ namespace Inlamning_2_ra_kod
                 people.RemoveAt(indexPerson);
         }
 
-        /* METHOD: class.ReadListFile (static) 
-         * PURPOSE: READ ALL FILES (.txt)
-         * PARAMETERS: THE FILE TO READ: fileName
-         * RETURN VALUE: SHOW THE FILE CONTENT
+        /* METHOD: ConfirmationAction(static) 
+         * PURPOSE: MAKE A QUESTION CONFIRMATION IN A FUNCTION
+         * PARAMETERS: STRING ACTION
+         * RETURN VALUE: QUESTION TO THE USER FOR TO DO AN ACTION
          */
         public static bool ConfirmationAction(string action)
         {
