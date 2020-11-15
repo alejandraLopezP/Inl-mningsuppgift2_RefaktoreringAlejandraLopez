@@ -2,124 +2,251 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using static System.Console;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Inlamning_2_ra_kod
 {
+
+    /* CLASS: Person
+    * PURPOSE: Create a new Contact in the Address Book
+    */
     class Person
     {
-        public string namn, adress, telefon, email;
-        public Person(string N, string A, string T, string E)
+        public string _name, _address, _phone, _email;
+
+        /* METHOD: class.ReadListFile (static) 
+         * PURPOSE: READ ALL FILES (.txt)
+         * PARAMETERS: THE FILE TO READ: fileName
+         * RETURN VALUE: SHOW THE FILE CONTENT
+         */
+        public Person(string name, string address, string phone, string email)
         {
-            namn = N; adress = A; telefon = T; email = E;
+            _name = name; _address = address; _phone = phone; _email = email;
+        }
+
+        /* METHOD: class.ReadListFile (static) 
+         * PURPOSE: READ ALL FILES (.txt)
+         * PARAMETERS: THE FILE TO READ: fileName
+         * RETURN VALUE: SHOW THE FILE CONTENT
+         */
+        public Person()
+        {
+            Write("Introduce a contact NAME: ");
+            _name = ReadLine().ToUpper();
+            Write("Introduce a contact ADDRESS: ");
+            _address = ReadLine().ToUpper();
+            Write("Introduce a contact PHONE: ");
+            _phone = ReadLine().ToUpper();
+            Write("Introduce a contact EMAIL: ");
+            _email = ReadLine().ToUpper();
+        }
+
+        /* METHOD: class.ReadListFile (static) 
+         * PURPOSE: READ ALL FILES (.txt)
+         * PARAMETERS: THE FILE TO READ: fileName
+         * RETURN VALUE: SHOW THE FILE CONTENT
+         */
+        public Person(string fields, string values)
+        {
+            _name = "";
+            _address = "";
+            _phone = "";
+            _email = "";
+
+            string[] fieldsList = fields.Split(", ");
+            string[] valueList = values.Split(", ");
+
+            if(fieldsList.Length == valueList.Length)
+            {
+                for (int i = 0; i < fieldsList.Length; i++)
+                {
+                    if (fieldsList[i].ToUpper() == "NAME")
+                        _name = valueList[i];
+                    else if (fieldsList[i].ToUpper() == "ADDRESS")
+                        _address = valueList[i];
+                    else if (fieldsList[i].ToUpper() == "PHONE")
+                        _phone = valueList[i];
+                    else if (fieldsList[i].ToUpper() == "EMAIL")
+                        _email = valueList[i];
+                    else
+                        WriteLine("Undefinded field " + fieldsList[i].ToUpper());
+                }
+            }
+        }
+
+        /* METHOD: class.ReadListFile (static) 
+         * PURPOSE: READ ALL FILES (.txt)
+         * PARAMETERS: THE FILE TO READ: fileName
+         * RETURN VALUE: SHOW THE FILE CONTENT
+         */
+        public void Print()
+        {
+            WriteLine("{0}, {1}, {2}, {3}", _name, _address, _phone, _email);
         }
     }
+
+     /* CLASS: Program
+      * PURPOSE: Create a new Contact in the Address Book
+      */
     class Program
     {
         static void Main(string[] args)
         {
-            List<Person> Dict = new List<Person>();
+            var fileName = @".\addressList.txt";
+            List<Person> personList = ReadListToFile(fileName);
 
-            Console.Write("Laddar adresslistan ... ");
-            using (StreamReader fileStream = new StreamReader(@"..\..\address.lis"))
-            {
-                while (fileStream.Peek() >= 0)
-                {
-                    string line = fileStream.ReadLine();
-                    // Console.WriteLine(line);
-                    string[] word = line.Split('#');
-                    // Console.WriteLine("{0}, {1}, {2}, {3}", word[0], word[1], word[2], word[3]);
-                    Person P = new Person(word[0], word[1], word[2], word[3]);
-                    Dict.Add(P);
-                }
-            }
-            Console.WriteLine("klart!");
-
-            Console.WriteLine("Hej och välkommen till adresslistan");
-            Console.WriteLine("Skriv 'sluta' för att sluta!");
+            WriteLine("Welcome to the Address Book!");
+            WriteLine("Write 'quit' for to finish the program!");
             string command;
             do
             {
-                Console.Write("> ");
-                command = Console.ReadLine();
-                if (command == "sluta")
+                Write("> ");
+                command = ReadLine();
+                if (command == "quit")
                 {
-                    Console.WriteLine("Hej då!");
+                    WriteLine("Bye bye!");
                 }
-                else if (command == "ny")
+                else if (command == "new")
                 {
-                    Console.WriteLine("Lägger till ny person");
-                    Console.Write("  1. ange namn:    ");
-                    string name = Console.ReadLine();
-                    Console.Write("  2. ange adress:  ");
-                    string adress = Console.ReadLine();
-                    Console.Write("  3. ange telefon: ");
-                    string telefon = Console.ReadLine();
-                    Console.Write("  4. ange email:   ");
-                    string email = Console.ReadLine();
-                    Dict.Add(new Person(name, adress, telefon, email));
+                    Person person = new Person();
+                    personList.Add(person);
                 }
-                else if (command == "ta bort")
+                else if (command == "delete")
                 {
-                    Console.Write("Vem vill du ta bort (ange namn): ");
-                    string villTaBort = Console.ReadLine();
-                    int found = -1;
-                    for (int i = 0; i < Dict.Count(); i++)
+                    Write("Wich contact do you want delete? (introduce the Name): ");
+                    string deleteContact = ReadLine().ToUpper();
+                    DeleteContact(personList, deleteContact);
+                }
+                else if (command == "show")
+                {
+                    for (int i = 0; i < personList.Count(); i++)
                     {
-                        if (Dict[i].namn == villTaBort) found = i;
-                    }
-                    if (found == -1)
-                    {
-                        Console.WriteLine("Tyvärr: {0} fanns inte i telefonlistan", villTaBort);
-                    }
-                    else
-                    {
-                        Dict.RemoveAt(found);
+                        Person person = personList[i];
+                        person.Print();
                     }
                 }
-                else if (command == "visa")
+                else if (command == "change")
                 {
-                    for (int i = 0; i < Dict.Count(); i++)
-                    {
-                        Person P = Dict[i];
-                        Console.WriteLine("{0}, {1}, {2}, {3}", P.namn, P.adress, P.telefon, P.email);
-                    }
-                }
-                else if (command == "ändra")
-                {
-                    Console.Write("Vem vill du ändra (ange namn): ");
-                    string villÄndra = Console.ReadLine();
-                    int found = -1;
-                    for (int i = 0; i < Dict.Count(); i++)
-                    {
-                        if (Dict[i].namn == villÄndra) found = i;
-                    }
-                    if (found == -1)
-                    {
-                        Console.WriteLine("Tyvärr: {0} fanns inte i telefonlistan", villÄndra);
-                    }
-                    else
-                    {
-                        Console.Write("Vad vill du ändra (namn, adress, telefon eller email): ");
-                        string fältAttÄndra = Console.ReadLine();
-                        Console.Write("Vad vill du ändra {0} på {1} till: ", fältAttÄndra, villÄndra);
-                        string nyttVärde = Console.ReadLine();
-                        switch (fältAttÄndra)
-                        {
-                            case "namn": Dict[found].namn = nyttVärde; break;
-                            case "adress": Dict[found].adress = nyttVärde; break;
-                            case "telefon": Dict[found].telefon = nyttVärde; break;
-                            case "email": Dict[found].email = nyttVärde; break;
-                            default: break;
-                        }
-                    }
+                    Write("Wich contact do you want change? (introduce the Name): ");
+                    string changeContact = ReadLine().ToUpper();
+                    ChangeContact(personList, changeContact);
                 }
                 else
                 {
-                    Console.WriteLine("Okänt kommando: {0}", command);
+                    WriteLine($"Undefined command: {command}");
                 }
-            } while (command != "sluta");
+            } while (command != "quit");
+        }
+
+        /* METHOD: class.ReadListFile (static) 
+         * PURPOSE: READ ALL FILES (.txt)
+         * PARAMETERS: THE FILE TO READ: fileName
+         * RETURN VALUE: SHOW THE FILE CONTENT
+         */
+        public static List<Person> ReadListToFile(string fileName)
+        {
+
+            List<Person> people = new List<Person>();
+            Write("Load people list ... ");
+            using (StreamReader fileAddress = new StreamReader(fileName))
+            {
+                while (fileAddress.Peek() >= 0)
+                {
+                    string line = fileAddress.ReadLine();
+                    string[] textIntroduced = line.Split('#');
+                    Person person = new Person(textIntroduced[0], textIntroduced[1], textIntroduced[2], textIntroduced[3]);
+                    people.Add(person);
+                }
+            }
+            WriteLine("Done, list loaded!");
+            return people;
+        }
+
+        /* METHOD: class.GetIndexToListPerson (static) 
+          * PURPOSE: FIND THE CONTACT INDEX
+          * PARAMETERS: PEOPLE LIST AND VARIABEL changeContact THAT STORE THE NAME OF PERSON TO FIND
+          * RETURN VALUE: THE PERSON INDEX AND IF CONTACT DOESN´T EXIST, RETURN -1
+          */
+        public static int GetIndexToListPerson(List<Person> people, string changeContact)
+        {
+            int index = -1;
+            for (int i = 0; i < people.Count(); i++)
+            {
+                if (people[i]._name == changeContact) index = i;
+            }
+
+            return index;
+        }
+
+        /* METHOD: class.ReadListFile (static) 
+         * PURPOSE: READ ALL FILES (.txt)
+         * PARAMETERS: THE FILE TO READ: fileName
+         * RETURN VALUE: SHOW THE FILE CONTENT
+         */
+        public static void ChangeContactInfoByIndex(List<Person> people, int index)
+        {
+            WriteLine("Introduce the fields of the Contact that you want modified, like this: (name, address, phone, email) ");
+            string fields =  ReadLine();
+
+            Write("Introduce the new values: (name, address, phone, email): ");
+            string values = ReadLine().ToUpper();
+            Person newPerson = new Person(fields, values);
+            people[index]._name = newPerson._name == "" ? people[index]._name : newPerson._name;
+            people[index]._address = newPerson._address == "" ? people[index]._address : newPerson._address;
+            people[index]._phone = newPerson._phone == "" ? people[index]._phone : newPerson._phone;
+            people[index]._email = newPerson._email == "" ? people[index]._email : newPerson._email;
+        }
+
+        /* METHOD: class.ReadListFile (static) 
+         * PURPOSE: READ ALL FILES (.txt)
+         * PARAMETERS: THE FILE TO READ: fileName
+         * RETURN VALUE: SHOW THE FILE CONTENT
+         */
+        public static void ChangeContact(List<Person> people, string changeContact)
+        {
+            int indexPerson = GetIndexToListPerson(people, changeContact);
+            if (indexPerson == -1)
+                WriteLine($"Unluckely: {changeContact} doesn´t exist in the Address Book :(");
+            else
+            {
+                WriteLine($"This contact {changeContact} ");
+                people[indexPerson].Print();
+                if(ConfirmationAction("Update"))
+                    ChangeContactInfoByIndex(people, indexPerson);
+            }
+        }
+
+        /* METHOD: class.ReadListFile (static) 
+         * PURPOSE: READ ALL FILES (.txt)
+         * PARAMETERS: THE FILE TO READ: fileName
+         * RETURN VALUE: SHOW THE FILE CONTENT
+         */
+        public static void DeleteContact(List<Person> people, string deleteContact)
+        {
+            int indexPerson = GetIndexToListPerson(people, deleteContact);
+            if (indexPerson == -1)
+                WriteLine($"Unluckely: {deleteContact} doesn´t exist in the Address Book :(");
+            else
+                people.RemoveAt(indexPerson);
+        }
+
+        /* METHOD: class.ReadListFile (static) 
+         * PURPOSE: READ ALL FILES (.txt)
+         * PARAMETERS: THE FILE TO READ: fileName
+         * RETURN VALUE: SHOW THE FILE CONTENT
+         */
+        public static bool ConfirmationAction(string action)
+        {
+            WriteLine("Are you sure that you want " + action + " Y/N");
+            string answerAction = ReadLine().ToUpper();
+            if (answerAction == "Y" )
+            {
+                return true;
+            }
+            WriteLine(action + " Cancelled!");
+            return false;
         }
     }
 }
