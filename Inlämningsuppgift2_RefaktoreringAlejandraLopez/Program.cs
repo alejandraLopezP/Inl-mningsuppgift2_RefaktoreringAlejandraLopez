@@ -44,7 +44,7 @@ namespace Inlamning_2_ra_kod
         }
 
         /* METHOD: PERSON
-         * PURPOSE: CREATE A PERSON BY A FIELD AND VALUE INTRODUCED BY USER
+         * PURPOSE: CREATE A PERSON BY A FIELD AND A VALUE CORRESPONDING TO THE FIELD INTRODUCED BY USER
          * PARAMETERS: FIELD LINKED TO A VALUE
          * RETURN VALUE: RETURN A PERSON 
          */
@@ -79,7 +79,7 @@ namespace Inlamning_2_ra_kod
         /* METHOD: PRINT
          * PURPOSE: SHOW A PERSON INFORMATION
          * PARAMETERS: EMPTY
-         * RETURN VALUE: SHOW A PERSON
+         * RETURN VALUE: SHOW A PERSON BY CLASS PERSON PROPERTIES
          */
         public void Print()
         {
@@ -87,8 +87,8 @@ namespace Inlamning_2_ra_kod
         }
     }
 
-     /* CLASS: Program
-      * PURPOSE: Create and manipulate a Contact in the Address Book
+     /* CLASS: PROGRAM
+      * PURPOSE: CREATE AND MANIPULATE A CONTACT INFORMATION STORED IN A ADDRESS BOOK
       */
     class Program
     {
@@ -141,7 +141,7 @@ namespace Inlamning_2_ra_kod
         }
 
         /* METHOD: ReadListToFile (static) 
-         * PURPOSE: LOAD AND READ ALL FILES (.txt)
+         * PURPOSE: LOAD AND READ A FILE (.txt)
          * PARAMETERS: THE FILE TO READ: fileName
          * RETURN VALUE: SHOW THE FILE CONTENT
          */
@@ -165,7 +165,7 @@ namespace Inlamning_2_ra_kod
         }
 
         /* METHOD:GetIndexToListPerson (static) 
-          * PURPOSE: FIND THE CONTACT INDEX
+          * PURPOSE: FIND THE CONTACT INDEX FOR TO FACILITATE ITS HANDLING
           * PARAMETERS: 1-PEOPLE LIST AND VARIABEL 2-changeContact THAT STORE THE NAME OF PERSON TO FIND
           * RETURN VALUE: THE PERSON INDEX AND IF CONTACT DOESN´T EXIST, RETURN -1
           */
@@ -181,8 +181,9 @@ namespace Inlamning_2_ra_kod
         }
 
         /* METHOD: ChangeContactInfoByIndex(static) 
-         * PURPOSE: FIND A CONTACT BY THEM INDEX
-         * PARAMETERS: LIST OF PERSON AND INDEX VARIABEL
+         * PURPOSE: FIND A CONTACT BY THEM INDEX AND CHANGE A SPECIFIC INFO 
+         *           ( KEEP THE INFO THAT HAS NOT BEEN MODIFIED)
+         * PARAMETERS: LIST OF PERSON AND INDEX VARIABEL FOR THAT SPECIFIC PERSON
          * RETURN VALUE: THE CONTACT FINDED
          */
         public static void ChangeContactInfoByIndex(List<Person> people, int index)
@@ -201,7 +202,7 @@ namespace Inlamning_2_ra_kod
 
         /* METHOD: ChangeContact (static) 
          * PURPOSE: EDIT PERSON INFORMATION
-         * PARAMETERS: LIST OF CONTACT AND changeContact VARIABEL
+         * PARAMETERS: LIST OF CONTACT AND THE CONTACT TO BE MODIFIED:changeContact 
          * RETURN VALUE: PERSON WITH UPDATE INFO
          */
         public static void ChangeContact(List<Person> people, string changeContact)
@@ -220,7 +221,7 @@ namespace Inlamning_2_ra_kod
 
         /* METHOD: DeleteContact (static) 
          * PURPOSE: DELETE A CONTACT FROM THE ADDRESS BOOK
-         * PARAMETERS: LIST OF CONTACT AND deleteContact VARIABEL
+         * PARAMETERS: LIST OF CONTACT AND THE CONTACT TO BE DELETED: deleteContact 
          * RETURN VALUE: PERSON DELETED FROM THE LIST PERSON
          */
         public static void DeleteContact(List<Person> people, string deleteContact)
@@ -234,7 +235,7 @@ namespace Inlamning_2_ra_kod
 
         /* METHOD: ConfirmationAction(static) 
          * PURPOSE: MAKE A QUESTION CONFIRMATION IN A FUNCTION
-         * PARAMETERS: STRING ACTION
+         * PARAMETERS: STRING ACTION: YES/NO
          * RETURN VALUE: QUESTION TO THE USER FOR TO DO AN ACTION
          */
         public static bool ConfirmationAction(string action)
